@@ -1,0 +1,5 @@
+
+.chat-scroll-area {
+    max-height: 400px;
+    overflow-y: auto;
+}

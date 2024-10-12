@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 
 import Form from './Form';
+import Chat from './Chat';
 import '../Styles/Modal.css';
 
+import { axiosHandler } from '../Utils/axiosHandler';
 
 export default function Modal({}) {
+
+    class Question {
+        constructor(prompt, response) {
+            this.prompt = prompt;
+            this.response = response;
+        }
+    }
+
+    // We use an array to store the questions object!
+    const [chatList, setChatList] = useState([]);
 
     const [formData, setFormData] = useState({
         prompt: '',
@@ -17,22 +29,48 @@ export default function Modal({}) {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Formulario enviado:', formData);
+        const endpoint = 'query-gpt';
+
+        try {
+            const response = await axiosHandler(endpoint, formData);
+            let output = response['data']['response'];
+
+            const chatPrompt = new Question(formData.prompt, output);
+            setChatList((prevChatList) => [...prevChatList, chatPrompt]);
+            console.log('Formulario enviado:', formData);
+
+            setFormData({ prompt: '' });
+        } catch (error) {
+            // Manejo de errores
+            let message = error.response['data']['message'];
+            console.error('Error al enviar datos:', error.response['data']);
+            alert(message);
+        }
     };
 
     return(
-        <div className="container-lg mt-2 border-white rounded bg-dark my-2">
+        <div className="container-lg border-white rounded bg-dark my-4">
             <div className="container-header m-4 text-center">
-                <h4><b>PromptBox App</b></h4>
+                <h4>
+                    <b>PromptBox Chat</b>
+                </h4>
             </div>
             <div className="container-body">
-                <Form
-                    handleChange={handleChange}
-                    handleSubmit={handleSubmit}
-                    formData={formData}
-                />
+                <div className="row">
+                    <Chat
+                        chatList={chatList}
+                    />
+                </div>
+                <div className="row">
+                    <Form
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        formData={formData}
+                    />
+                </div>
+
             </div>
         </div>
     );
