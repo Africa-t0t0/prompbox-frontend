@@ -26,6 +26,7 @@ export default function Chat({ chatList }) {
                                     {chat.prompt}
                                 </div>
                             </div>
+                            <hr />
                             <div className="row">
                                 <div className="response text-end">
                                     {chat.response}

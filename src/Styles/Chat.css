@@ -3,3 +3,31 @@
     max-height: 400px;
     overflow-y: auto;
 }
+
+.prompt {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.code-container {
+    max-width: 800px; /* Define el ancho máximo */
+    white-space: pre-wrap; /* Mantiene los saltos de línea y los espacios */
+    overflow-wrap: break-word; /* Rompe palabras largas si es necesario */
+    border: 1px solid #ccc; /* Añade un borde opcional */
+    padding: 10px; /* Añade un poco de espacio interno */
+    background-color: black; /* Color de fondo opcional */
+    font-family: monospace; /* Fuente monoespaciada para el código */
+}
+
+pre {
+    background-color: #0c0c0c;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: auto;
+    white-space: pre-wrap; /* Permite que el texto se ajuste */
+}
+
+code {
+    font-family: monospace;
+}
