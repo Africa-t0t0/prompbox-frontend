@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import '../Styles/Chat.css'
+
+import CodeDisplayer from './CodeDisplayer';
 
 export default function Chat({ chatList }) {
 
@@ -20,7 +22,7 @@ export default function Chat({ chatList }) {
                     ref={chatEndRef}
                 >
                     {chatList.map((chat, index) => (
-                        <div className="row" key={index}>
+                        <div className="row gap-2" key={index}>
                             <div className="row">
                                 <div className="prompt text-start">
                                     {chat.prompt}
@@ -28,8 +30,8 @@ export default function Chat({ chatList }) {
                             </div>
                             <hr />
                             <div className="row">
-                                <div className="response text-end">
-                                    {chat.response}
+                                <div className="response text-start">
+                                    <CodeDisplayer content={chat.response} language={chat.language} />
                                 </div>
                             </div>
                         </div>

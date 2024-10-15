@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 
 import Form from './Form';
 import Chat from './Chat';
-import CodeDisplayer from './CodeDisplayer';
 
 import '../Styles/Modal.css';
 
 import { axiosHandler } from '../Utils/axiosHandler';
 
-export default function Modal({}) {
+export default function Modal() {
 
     class Question {
-        constructor(prompt, response) {
+        constructor(prompt, response, language) {
             this.prompt = prompt;
             this.response = response;
+            this.language = language;
         }
     }
 
@@ -31,29 +31,6 @@ export default function Modal({}) {
         });
     };
 
-    const handleDummy = async(e) => {
-        e.preventDefault();
-        let endpoint = 'dummy';
-        let method = 'GET';
-
-        try {
-            const response = await axiosHandler(endpoint, formData, method);
-            let output = response['data']['response'];
-            let cleanedOutput = <CodeDisplayer code={output}></CodeDisplayer>;
-
-            const chatPrompt = new Question(formData.prompt, cleanedOutput);
-            setChatList((prevChatList) => [...prevChatList, chatPrompt]);
-            console.log('Formulario enviado:', formData);
-
-            setFormData({ prompt: '' });
-        } catch (error) {
-            // Manejo de errores
-            let message = error.response['data']['message'];
-            console.error('Error al enviar datos:', error.response['data']);
-            alert(message);
-        }
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         let endpoint = 'query-gpt';
@@ -62,14 +39,12 @@ export default function Modal({}) {
         try {
             const response = await axiosHandler(endpoint, formData, method);
             let output = response['data']['response'];
-            let cleanedOutput = <CodeDisplayer code={output}></CodeDisplayer>;
-            const chatPrompt = new Question(formData.prompt, cleanedOutput);
+            let language = response['data']['language'];
+            const chatPrompt = new Question(formData.prompt, output, language);
             setChatList((prevChatList) => [...prevChatList, chatPrompt]);
-            console.log('Formulario enviado:', formData);
 
             setFormData({ prompt: '' });
         } catch (error) {
-            // Manejo de errores
             let message = error.response['data']['message'];
             console.error('Error al enviar datos:', error.response['data']);
             alert(message);
@@ -77,7 +52,7 @@ export default function Modal({}) {
     };
 
     return(
-        <div className="container-lg border-white rounded bg-dark my-4">
+        <div className="container-xxl border-white rounded bg-dark my-4">
             <div className="container-header m-4 text-center">
                 <h4>
                     <b>PromptBox Chat</b>
@@ -96,12 +71,7 @@ export default function Modal({}) {
                         formData={formData}
                     />
                 </div>
-            {/* <button
-                type='submit'
-                onClick={handleDummy}
-            >
-                Probando
-            </button> */}
+
             </div>
         </div>
     );

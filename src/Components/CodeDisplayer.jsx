@@ -1,10 +1,9 @@
-import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
-export default function CodeDisplayer({ code }) {
-
+export default function MarkdownDisplayer({ content }) {
     return (
-        <div
-            dangerouslySetInnerHTML={{ __html: code }}
-        />
+        <div>
+            <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
     );
 }
