@@ -70,7 +70,6 @@ export default React.memo(function Modal() {
                         handleSubmit={handleSubmit}
                     />
                 </div>
-
             </div>
         </div>
     );
