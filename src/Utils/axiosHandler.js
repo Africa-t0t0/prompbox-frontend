@@ -7,6 +7,7 @@ const AUTH_URL = process.env.REACT_APP_AUTH_URL;
 export function axiosHandler(endpoint, content, method=null, server='backend') {
 
     let SELECTED_URL = '';
+
     if (server === 'backend') {
         SELECTED_URL = BACKEND_URL;
     } else {
@@ -17,17 +18,23 @@ export function axiosHandler(endpoint, content, method=null, server='backend') {
         content = 'dummy';
     }
 
+    let token = localStorage.getItem('token');
+
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+
     if (method === 'POST') {
-        debugger;
         const response = axios.post(`${SELECTED_URL}${endpoint}`, content, {
-            headers: { 'Content-Type': 'application/json' }
+            headers: headers
         });
 
         return response;
 
     } else if (method === 'GET') {
         const response = axios.get(`${SELECTED_URL}${endpoint}`, content, {
-            headers: { 'Content-Type': 'application/json' }
+            headers: headers
         });
 
         return response;

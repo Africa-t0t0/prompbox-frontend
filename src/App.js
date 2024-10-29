@@ -15,21 +15,22 @@ function App() {
   const [authorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    // Verifica si el token está activo al montar el componente
     const tokenActive = isTokenActive();
     setIsAuthorized(tokenActive);
-}, []); // Solo ejecuta este efecto al montar el componente
+}, []);
 
-  const handleTokenChange = () => {
-    setIsAuthorized(isTokenActive());
-  }
-
-  console.log('token is active?', isTokenActive());
+const handleLogout = () => {
+  localStorage.removeItem('token');
+  setIsAuthorized(false);
+};
 
   return (
     <div className="App">
       <header>
-        <Header />
+        <Header
+          handleLogout={handleLogout}
+          authorized={authorized}
+        />
       </header>
       <body>
         <Body>
