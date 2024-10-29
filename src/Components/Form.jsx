@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { forwardRef} from 'react';
 
 
-export default function Form({ handleChange, handleSubmit, formData }) {
-
+const Form = forwardRef(function Form({ handleChange, handleSubmit }, ref) {
 
     return (
         <div className="container border">
@@ -20,11 +19,11 @@ export default function Form({ handleChange, handleSubmit, formData }) {
                                 Prompt
                             </label>
                             <input
+                                ref={ref}
                                 type="text"
                                 className="form-control"
                                 id="prompt"
                                 name="prompt"
-                                value={formData.prompt}
                                 onChange={handleChange}
                             />
                         </div>
@@ -42,4 +41,6 @@ export default function Form({ handleChange, handleSubmit, formData }) {
         </div>
     );
 
-}
+});
+
+export default Form;

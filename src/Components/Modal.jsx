@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import Form from './Form';
 import Chat from './Chat';
@@ -7,7 +7,7 @@ import '../Styles/Modal.css';
 
 import { axiosHandler } from '../Utils/axiosHandler';
 
-export default function Modal() {
+export default React.memo(function Modal() {
 
     class Question {
         constructor(prompt, response, language) {
@@ -20,16 +20,12 @@ export default function Modal() {
     // We use an array to store the questions object!
     const [chatList, setChatList] = useState([]);
 
-    const [formData, setFormData] = useState({
-        prompt: '',
-    });
+    const prompt = useRef(null);
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+    const handlePromptChange = (e) => {
+        prompt.current.value = e.target.value;
+    }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,13 +33,16 @@ export default function Modal() {
         let method = 'POST'
 
         try {
-            const response = await axiosHandler(endpoint, formData, method);
+            const response = await axiosHandler(endpoint, {'prompt': prompt.current.value }, method);
             let output = response['data']['response'];
             let language = response['data']['language'];
-            const chatPrompt = new Question(formData.prompt, output, language);
+            let stringPrompt = String(prompt.current.value);
+            const chatPrompt = new Question(stringPrompt, output, language);
             setChatList((prevChatList) => [...prevChatList, chatPrompt]);
-
-            setFormData({ prompt: '' });
+            prompt.current.value = '';
+            if (prompt.current) {
+                prompt.current.focus(); // Asegúrate de que el input tenga el enfoque
+            }
         } catch (error) {
             let message = error.response['data']['message'];
             console.error('Error al enviar datos:', error.response['data']);
@@ -66,9 +65,9 @@ export default function Modal() {
                 </div>
                 <div className="row">
                     <Form
-                        handleChange={handleChange}
+                        ref={prompt}
+                        handleChange={handlePromptChange}
                         handleSubmit={handleSubmit}
-                        formData={formData}
                     />
                 </div>
 
@@ -76,4 +75,4 @@ export default function Modal() {
         </div>
     );
 
-}
+})

@@ -22,7 +22,10 @@ export default function Chat({ chatList }) {
                     ref={chatEndRef}
                 >
                     {chatList.map((chat, index) => (
-                        <div className="row gap-2" key={index}>
+                        <div
+                            className="row gap-2"
+                            key={index}
+                        >
                             <div className="row">
                                 <div className="prompt text-start">
                                     {chat.prompt}
@@ -31,7 +34,10 @@ export default function Chat({ chatList }) {
                             <hr />
                             <div className="row">
                                 <div className="response text-start">
-                                    <CodeDisplayer content={chat.response} language={chat.language} />
+                                    <CodeDisplayer
+                                        content={chat.response}
+                                        language={chat.language}
+                                    />
                                 </div>
                             </div>
                         </div>
