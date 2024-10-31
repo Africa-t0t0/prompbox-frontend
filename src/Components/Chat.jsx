@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import '../Styles/Chat.css'
 
 import CodeDisplayer from './CodeDisplayer';
+import Marquee from './Marquee';
 
 export default function Chat({ chatList }) {
 
@@ -21,7 +22,7 @@ export default function Chat({ chatList }) {
                     className="chat-scroll-area"
                     ref={chatEndRef}
                 >
-                    {chatList.map((chat, index) => (
+                    {chatList.length > 0 ? chatList.map((chat, index) => (
                         <div
                             className="row gap-2"
                             key={index}
@@ -41,7 +42,15 @@ export default function Chat({ chatList }) {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <div className="container mt-4 mb-4">
+                                <p>
+                                    <h4>
+                                        <Marquee text={'Ask something to get started!'} />
+                                    </h4>
+                                </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

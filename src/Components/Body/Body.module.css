@@ -5,7 +5,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
       /* Fondo degradado */
-      background: linear-gradient(to bottom, #6e0000, #420000);
+      background: linear-gradient(to bottom, #EAEAEA, #E8D8C4);
       /* Asegura que el fondo cubra toda la pantalla */
       height: 100vh;
       margin: 0;

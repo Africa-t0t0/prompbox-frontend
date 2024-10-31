@@ -4,36 +4,33 @@ import React, { forwardRef} from 'react';
 const Form = forwardRef(function Form({ handleChange, handleSubmit }, ref) {
 
     return (
-        <div className="container border">
-            <div className="container-body">
+        <div
+            className='card rounded bg-dark'
+        >
+            <div className='card-body'>
                 <form
                     onSubmit={handleSubmit}
-                    className="p-4 rounded"
+                    className=' rounded '
                 >
-                    <div className="row">
-                        <div className="col-11 mb-3">
-                            <label
-                                htmlFor="nombre"
-                                className="form-label"
-                            >
-                                Prompt
-                            </label>
+                    <div className='row'>
+                        <div className='col-11'>
                             <input
                                 ref={ref}
-                                type="text"
-                                className="form-control"
-                                id="prompt"
-                                name="prompt"
+                                type='text'
+                                className='form-control'
+                                id='prompt'
+                                name='prompt'
                                 onChange={handleChange}
+                                placeholder='Write here!'
                             />
                         </div>
-                        <div className="col-1 mb-4 mt-4">
-                        <button
-                            type="submit"
-                            className="btn btn-primary"
-                        >
-                            Enviar
-                        </button>
+                        <div className='col-1 '>
+                            <button
+                                type='submit'
+                                className='btn btn-primary'
+                            >
+                                Enviar
+                            </button>
                         </div>
                     </div>
                 </form>
